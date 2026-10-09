@@ -7,6 +7,11 @@ on:
   pull_request:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Version à publier (ex. 1.0.1). Vide = simple compilation, sans release."
+        required: false
+        type: string
 
 # Une seule exécution à la fois par branche : une plus récente annule la précédente
 concurrency:
@@ -41,12 +46,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
-      contents: write # ajouter l'APK à une release (tags uniquement)
+      contents: write # créer la release et y déposer l'APK
     env:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      INPUT_VERSION: ${{ github.event.inputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -59,6 +65,28 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
       - run: npm ci
+
+      # Un tag vX.Y.Z (ou la saisie d'une version à la main) déclenche une release.
+      # Le versionCode Android est calculé pour toujours augmenter : 1.2.3 → 10203.
+      - name: Version
+        id: version
+        run: |
+          tag=""
+          if [ "${{ github.ref_type }}" = "tag" ]; then tag="${{ github.ref_name }}"; fi
+          if [ -z "$tag" ] && [ -n "$INPUT_VERSION" ]; then tag="v${INPUT_VERSION#v}"; fi
+          if [ -n "$tag" ]; then
+            if ! echo "$tag" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
+              echo "::error::Version « $tag » invalide : le format attendu est vX.Y.Z (ex. v1.0.1)."
+              exit 1
+            fi
+            number="${tag#v}"
+            IFS=. read -r major minor patch <<< "$number"
+            {
+              echo "ORG_GRADLE_PROJECT_APPAINTUEUSE_VERSION_NAME=$number"
+              echo "ORG_GRADLE_PROJECT_APPAINTUEUSE_VERSION_CODE=$((major * 10000 + minor * 100 + patch))"
+            } >> "$GITHUB_ENV"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Licences du SDK Android
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
@@ -87,13 +115,15 @@ jobs:
       - name: Nommer l'APK
         id: apk
         run: |
-          if [ "${{ github.ref_type }}" = "tag" ]; then
-            name="appaintueuse-${{ github.ref_name }}.apk"
+          tag="${{ steps.version.outputs.tag }}"
+          if [ -n "$tag" ]; then
+            name="appaintueuse-$tag.apk"
           else
             name="appaintueuse-ci-${{ github.run_number }}-${GITHUB_SHA::7}.apk"
           fi
           cp android/app/build/outputs/apk/release/app-release.apk "$name"
           echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "sha256=$(sha256sum "$name" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
           {
             echo "### $name"
             echo "- Taille : $(du -h "$name" | cut -f1)"
@@ -107,13 +137,33 @@ jobs:
           path: ${{ steps.apk.outputs.name }}
           retention-days: 30
 
-      # Seulement pour un tag ET une APK signée avec la vraie clé : sinon on écraserait
-      # l'APK publié par une version signée autrement, impossible à installer par-dessus.
-      - name: Ajouter l'APK à la release
-        if: github.ref_type == 'tag' && steps.signing.outputs.signed == 'true'
+      # Seulement avec la vraie clé de signature : une APK signée autrement ne pourrait pas
+      # être installée par-dessus la version précédente.
+      - name: Publier la release
+        if: steps.version.outputs.tag != '' && steps.signing.outputs.signed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          SHA256: ${{ steps.apk.outputs.sha256 }}
+          APK: ${{ steps.apk.outputs.name }}
         run: |
-          gh release view "${{ github.ref_name }}" > /dev/null 2>&1 \
-            || gh release create "${{ github.ref_name }}" --title "${{ github.ref_name }}" --generate-notes
-          gh release upload "${{ github.ref_name }}" "${{ steps.apk.outputs.name }}" --clobber
+          cat > notes.md <<EOF
+          ## Appaintueuse ${TAG#v}
+
+          ### Installer sur Android (7.0 ou plus)
+          1. Depuis le téléphone, télécharger **$APK** (section *Assets* en bas de cette page).
+          2. Ouvrir le fichier et autoriser l'installation depuis cette source si Android le demande.
+          3. Lancer **Appaintueuse** : aucun compte ni connexion Internet nécessaire.
+
+          > Android peut afficher un avertissement pour une application installée hors du Play Store : c'est normal.
+
+          ### Vérification du fichier
+          - SHA-256 : \`$SHA256\`
+          - Compilé automatiquement par GitHub Actions et signé avec la clé de publication du projet.
+          EOF
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release edit "$TAG" --title "Appaintueuse ${TAG#v}" --notes-file notes.md
+          else
+            gh release create "$TAG" --target "$GITHUB_SHA" --title "Appaintueuse ${TAG#v}" --notes-file notes.md
+          fi
+          gh release upload "$TAG" "$APK" --clobber

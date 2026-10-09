@@ -82,8 +82,9 @@ android {
         applicationId "com.appaintueuse"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        // La CI les fournit à partir du tag (v1.2.3 → code 10203) ; valeurs locales par défaut
+        versionCode (project.findProperty('APPAINTUEUSE_VERSION_CODE') ?: '1').toInteger()
+        versionName project.findProperty('APPAINTUEUSE_VERSION_NAME') ?: '1.0.0'
     }
     signingConfigs {
         debug {

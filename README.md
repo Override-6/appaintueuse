@@ -105,17 +105,27 @@ cd android
 Sans ces identifiants, la compilation retombe sur la clé de debug (utile pour un essai local, pas pour publier).
 **La même clé doit toujours être utilisée** : Android refuse de mettre à jour une application signée avec une autre clé.
 
-## Intégration continue
+## Intégration continue et releases
 
 Le workflow [`android.yml`](.github/workflows/android.yml) s'exécute à chaque *push* ou *pull request* sur `master` :
 
 1. **Contrôles** : types, lint et tests.
-2. **APK release** : compilation d'un APK, déposé en artefact de l'exécution.
-3. Sur un tag `vX.Y.Z`, et si la clé de signature est fournie au dépôt (secrets `KEYSTORE_BASE64`,
-   `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`), l'APK signé est ajouté à la *release* correspondante.
+2. **APK release** : compilation d'un APK, déposé en artefact de l'exécution (30 jours).
 
-Sans ces secrets, l'APK produit par la CI est signé avec la clé de debug : bon pour tester, pas pour mettre à jour
-une version déjà installée avec la clé de publication.
+**Publier une version** se fait sans rien compiler en local, de deux façons :
+
+```bash
+git tag v1.0.1 && git push origin v1.0.1      # depuis un terminal
+```
+
+ou depuis GitHub : *Actions → Android CI → Run workflow*, en saisissant la version (`1.0.1`).
+
+La CI compile alors l'APK, le signe, crée la *release* (tag, notes, empreinte SHA-256) et y dépose le fichier.
+Le numéro de version Android est déduit du tag (`1.2.3` → `versionCode` 10203), il augmente donc toujours.
+
+La signature utilise 4 secrets du dépôt : `KEYSTORE_BASE64` (la clé encodée en base64), `KEYSTORE_PASSWORD`,
+`KEY_ALIAS` et `KEY_PASSWORD`. Sans eux, la CI compile quand même mais **ne publie pas** : un APK signé avec une
+autre clé ne pourrait pas être installé par-dessus la version déjà présente sur un téléphone.
 
 ## Licence
 
