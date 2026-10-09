@@ -1,0 +1,28 @@
+{
+  "mix": {
+    "intro": "Indique les parts de chaque produit : 5 – 1 – 1 veut dire 5 parts, 1 part, 1 part.",
+    "component": "Produit {{n}}",
+    "increase": "Ajouter une part au produit {{n}}",
+    "decrease": "Retirer une part au produit {{n}}",
+    "remove": "Retirer le produit {{n}}",
+    "addPart": "Ajouter un produit",
+    "total": "Quantité totale",
+    "quantities": "Quantité de chaque produit",
+    "liters": "{{value}} L",
+    "milliliters": "{{value}} mL",
+    "practiceHint": "Calcule d'abord la quantité du produit 1, en mL.",
+    "checkOk": "Vérification : la somme des produits redonne {{total}} L.",
+    "checkKo": "Vérification : les chiffres ne tombent pas juste, reprends les étapes.",
+    "steps": "Étapes",
+    "stepsHint": "Chaque étape s'appuie sur tes chiffres.",
+    "errors": {
+      "tooFew": "Il faut au moins 2 produits.",
+      "partsNotInteger": "Chaque produit compte au moins 1 part, en nombre entier.",
+      "missingTotal": "Il manque la quantité totale."
+    },
+    "formulas": [
+      "Une part = quantité totale ÷ somme des parts",
+      "Quantité d'un produit = nombre de parts du produit × une part"
+    ]
+  }
+}

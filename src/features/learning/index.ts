@@ -1,0 +1,12 @@
+export {PracticeProvider, usePractice} from './context/PracticeContext';
+export {CrossTable} from './components/CrossTable';
+export {PartsBar, type PartItem} from './components/PartsBar';
+export {PracticeGate} from './components/PracticeGate';
+export {PracticeToggle} from './components/PracticeToggle';
+export {StepList} from './components/StepList';
+export {LK} from './keys';
+export {isClose} from './logic/check';
+export {solveCross, type CrossResult} from './logic/cross';
+export {splitInParts, type PartsResult} from './logic/parts';
+export {describeQuantity} from './logic/quantity';
+export type {Step} from './logic/steps';

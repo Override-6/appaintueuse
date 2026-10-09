@@ -1,0 +1,293 @@
+{
+  "geometry": {
+    "sameThing": "Aire et surface, c'est la même chose.",
+    "kinds": {
+      "flat": "Figures planes",
+      "solid": "Solides"
+    },
+    "shapes": {
+      "square": "Carré",
+      "rectangle": "Rectangle",
+      "triangle": "Triangle",
+      "rhombus": "Losange",
+      "circle": "Disque",
+      "trapezoid": "Trapèze",
+      "ring": "Couronne",
+      "cube": "Cube",
+      "cuboid": "Pavé droit",
+      "cylinder": "Cylindre",
+      "cone": "Cône",
+      "truncatedCone": "Cône tronqué",
+      "sphere": "Sphère"
+    },
+    "dims": {
+      "side": "Côté",
+      "edge": "Arête",
+      "length": "Longueur",
+      "width": "Largeur",
+      "height": "Hauteur",
+      "base": "Base",
+      "bigDiagonal": "Grande diagonale",
+      "smallDiagonal": "Petite diagonale",
+      "baseLarge": "Grande base",
+      "baseSmall": "Petite base",
+      "radius": "Rayon",
+      "radiusOuter": "Rayon extérieur",
+      "radiusInner": "Rayon intérieur",
+      "radiusLarge": "Grand rayon",
+      "radiusSmall": "Petit rayon"
+    },
+    "units": {
+      "mm": "mm",
+      "cm": "cm",
+      "dm": "dm",
+      "m": "m"
+    },
+    "outputs": {
+      "area": "Aire"
+    },
+    "paint": {
+      "title": "Surface à peindre",
+      "parts": "Faces à peindre",
+      "all": "Tout cocher",
+      "none": "Tout décocher",
+      "result": "Surface à peindre",
+      "steps": "Comment on calcule",
+      "stepsHint": "Une petite opération à la fois."
+    },
+    "parts": {
+      "square": {
+        "face": {
+          "words": "Aire = côté × côté"
+        }
+      },
+      "rectangle": {
+        "face": {
+          "words": "Aire = longueur × largeur"
+        }
+      },
+      "triangle": {
+        "face": {
+          "words": "Aire = base × hauteur ÷ 2"
+        }
+      },
+      "rhombus": {
+        "face": {
+          "words": "Aire = grande diagonale × petite diagonale ÷ 2"
+        }
+      },
+      "circle": {
+        "face": {
+          "words": "Aire = π × rayon × rayon"
+        }
+      },
+      "trapezoid": {
+        "face": {
+          "words": "Aire = (grande base + petite base) × hauteur ÷ 2"
+        }
+      },
+      "ring": {
+        "face": {
+          "words": "Aire = π × (rayon extérieur × rayon extérieur − rayon intérieur × rayon intérieur)"
+        }
+      },
+      "cube": {
+        "top": {
+          "name": "Dessus",
+          "words": "Aire d'une face = arête × arête"
+        },
+        "bottom": {
+          "name": "Dessous",
+          "words": "Aire d'une face = arête × arête"
+        },
+        "front": {
+          "name": "Devant",
+          "words": "Aire d'une face = arête × arête"
+        },
+        "back": {
+          "name": "Derrière",
+          "words": "Aire d'une face = arête × arête"
+        },
+        "left": {
+          "name": "Côté gauche",
+          "words": "Aire d'une face = arête × arête"
+        },
+        "right": {
+          "name": "Côté droit",
+          "words": "Aire d'une face = arête × arête"
+        }
+      },
+      "cuboid": {
+        "top": {
+          "name": "Dessus",
+          "words": "Aire = longueur × largeur"
+        },
+        "bottom": {
+          "name": "Dessous",
+          "words": "Aire = longueur × largeur"
+        },
+        "front": {
+          "name": "Devant",
+          "words": "Aire = longueur × hauteur"
+        },
+        "back": {
+          "name": "Derrière",
+          "words": "Aire = longueur × hauteur"
+        },
+        "left": {
+          "name": "Côté gauche",
+          "words": "Aire = largeur × hauteur"
+        },
+        "right": {
+          "name": "Côté droit",
+          "words": "Aire = largeur × hauteur"
+        }
+      },
+      "cylinder": {
+        "lateral": {
+          "name": "Paroi (le tour)",
+          "words": "Aire = 2 × π × rayon × hauteur"
+        },
+        "top": {
+          "name": "Disque du haut",
+          "words": "Aire = π × rayon × rayon"
+        },
+        "bottom": {
+          "name": "Disque du bas",
+          "words": "Aire = π × rayon × rayon"
+        }
+      },
+      "cone": {
+        "lateral": {
+          "name": "Paroi (le tour)",
+          "words": "Aire = π × rayon × génératrice"
+        },
+        "base": {
+          "name": "Disque du bas",
+          "words": "Aire = π × rayon × rayon"
+        }
+      },
+      "truncatedCone": {
+        "lateral": {
+          "name": "Paroi (le tour)",
+          "words": "Aire = π × (grand rayon + petit rayon) × génératrice"
+        },
+        "top": {
+          "name": "Petit disque (haut)",
+          "words": "Aire = π × petit rayon × petit rayon"
+        },
+        "bottom": {
+          "name": "Grand disque (bas)",
+          "words": "Aire = π × grand rayon × grand rayon"
+        }
+      },
+      "sphere": {
+        "whole": {
+          "name": "Toute la boule",
+          "words": "Aire = 4 × π × rayon × rayon"
+        }
+      }
+    },
+    "calc": {
+      "mul": "{{a}} × {{b}} = {{result}}",
+      "div": "{{a}} ÷ {{b}} = {{result}}",
+      "add": "{{a}} + {{b}} = {{result}}",
+      "sub": "{{a}} − {{b}} = {{result}}",
+      "pi": "π × {{a}} = {{result}}  (π ≈ 3,14)",
+      "sqrt": "√{{a}} = {{result}}",
+      "toDm2": "{{area}} {{unit}} × {{factor}} = {{dm2}} dm² (1 {{unit}} = {{factor}} dm²)."
+    },
+    "formulas": {
+      "square": [
+        "Aire = côté × côté"
+      ],
+      "rectangle": [
+        "Aire = L × l",
+        "Périmètre = 2 × (L + l)",
+        "Diagonale = √(L² + l²)"
+      ],
+      "triangle": [
+        "Aire = base × hauteur ÷ 2"
+      ],
+      "rhombus": [
+        "Aire = D × d ÷ 2",
+        "D : grande diagonale, d : petite diagonale"
+      ],
+      "circle": [
+        "Aire = π × r × r",
+        "Circonférence = 2 × π × r",
+        "Diamètre = 2 × r"
+      ],
+      "trapezoid": [
+        "Aire = (B + b) × h ÷ 2"
+      ],
+      "ring": [
+        "Aire = π × (R × R − r × r)",
+        "R : rayon extérieur, r : rayon intérieur"
+      ],
+      "cube": [
+        "Aire d'une face = a × a",
+        "Surface totale = 6 × a × a",
+        "Volume = a × a × a"
+      ],
+      "cuboid": [
+        "Surface totale = 2 × (L × l + L × h + l × h)",
+        "Volume = L × l × h"
+      ],
+      "cylinder": [
+        "Aire latérale = 2 × π × r × h",
+        "Aire d'un disque = π × r × r",
+        "Surface totale = 2 × π × r × (r + h)",
+        "Volume = π × r × r × h"
+      ],
+      "cone": [
+        "Génératrice g = √(r × r + h × h)",
+        "Aire latérale = π × r × g",
+        "Surface totale = π × r × (r + g)",
+        "Volume = π × r × r × h ÷ 3"
+      ],
+      "truncatedCone": [
+        "Génératrice g = √((R − r) × (R − r) + h × h)",
+        "Aire latérale = π × (R + r) × g",
+        "Surface totale = π × (R + r) × g + π × R × R + π × r × r"
+      ],
+      "sphere": [
+        "Surface = 4 × π × r × r",
+        "Volume = 4 ÷ 3 × π × r × r × r"
+      ]
+    },
+    "menu": {
+      "formulas": "Mes formules",
+      "composed": "Surface composée",
+      "scale": "Échelle"
+    },
+    "formulasScreen": {
+      "title": "Mes formules",
+      "hint": "Le schéma montre les lettres. Aire = surface."
+    },
+    "composed": {
+      "title": "Surface composée",
+      "add": "+ Ajouter une forme",
+      "subtract": "Soustraire",
+      "addMode": "Ajouter",
+      "total": "Surface totale",
+      "remove": "Retirer",
+      "formulas": [
+        "Total = somme des aires ajoutées − somme des aires soustraites"
+      ]
+    },
+    "scale": {
+      "title": "Échelle",
+      "real": "Dimension réelle",
+      "plan": "Dimension sur le plan",
+      "ratio": "Échelle 1 :",
+      "formulas": [
+        "Plan = réelle ÷ échelle",
+        "Réelle = plan × échelle"
+      ]
+    },
+    "invalidRing": "Le rayon intérieur doit être inférieur au rayon extérieur",
+    "invalidCone": "Le petit rayon doit être inférieur au grand rayon",
+    "negative": "Les dimensions doivent être positives"
+  }
+}

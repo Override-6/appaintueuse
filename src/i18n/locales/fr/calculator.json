@@ -1,0 +1,12 @@
+{
+  "calculator": {
+    "history": "Historique",
+    "empty": "Aucun calcul",
+    "more": "Fonctions",
+    "error": "Erreur",
+    "clear": "C",
+    "fracToDec": "Fraction → décimal",
+    "decToFrac": "Décimal → fraction (1/64)",
+    "expression": "Expression"
+  }
+}

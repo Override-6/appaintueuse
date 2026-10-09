@@ -1,0 +1,91 @@
+{
+  "maths": {
+    "pick": "Choisir un outil",
+    "tools": {
+      "crossProduct": "Produit en croix",
+      "percent": "Pourcentages",
+      "rightTriangle": "Triangle rectangle"
+    },
+    "percent": {
+      "percentOf": "X % de Y",
+      "percentRatio": "X représente quel % de Y",
+      "applyChange": "Appliquer +/− X % à Y",
+      "variation": "Variation en % de Y à Z",
+      "percent": "Pourcentage X",
+      "x": "X",
+      "y": "Y",
+      "z": "Z",
+      "formulas": [
+        "X % de Y = X ÷ 100 × Y",
+        "% = X ÷ Y × 100",
+        "Nouveau = Y × (1 + X ÷ 100)",
+        "Variation = (Z − Y) ÷ Y × 100"
+      ]
+    },
+    "rightTriangle": {
+      "intro": "Renseigner deux valeurs parmi a, b, c ou l'angle A.",
+      "a": "Côté adjacent a",
+      "b": "Côté opposé b",
+      "c": "Hypoténuse c",
+      "angleA": "Angle A (°)",
+      "angleB": "Angle B (°)",
+      "invalid": "Valeurs incohérentes ou insuffisantes",
+      "formulas": [
+        "c² = a² + b²",
+        "sin A = b ÷ c",
+        "cos A = a ÷ c",
+        "tan A = b ÷ a",
+        "A + B = 90°"
+      ],
+      "extraIgnored": "Seules les 2 premières valeurs renseignées sont utilisées"
+    },
+    "measures": {
+      "title": "Mesures",
+      "stats": {
+        "title": "Série de mesures",
+        "hint": "Saisir les valeurs séparées par des espaces ou des points-virgules",
+        "values": "Valeurs",
+        "count": "Nombre",
+        "mean": "Moyenne",
+        "min": "Minimum",
+        "max": "Maximum",
+        "formulas": [
+          "Moyenne = somme ÷ nombre de valeurs"
+        ]
+      },
+      "tolerance": {
+        "title": "Tolérance",
+        "nominal": "Valeur nominale",
+        "plusMinus": "Écart ± admis",
+        "measured": "Valeur mesurée",
+        "min": "Minimum admis",
+        "max": "Maximum admis",
+        "ok": "Dans la tolérance",
+        "ko": "Hors tolérance",
+        "formulas": [
+          "Min = nominale − écart",
+          "Max = nominale + écart"
+        ]
+      }
+    },
+    "toolHints": {
+      "crossProduct": "Je connais un cas, je cherche la quantité pour un autre cas",
+      "percent": "Calculer une part, une hausse ou une baisse",
+      "rightTriangle": "Trouver un côté ou un angle qui manque"
+    },
+    "crossProduct": {
+      "intro": "Exemple : 1 litre de peinture couvre 700 dm². Pour une surface de 350 dm², combien de litres ? On range les nombres en 2 colonnes : 700 dm² ↔ 1 litre, et 350 dm² ↔ ?",
+      "a": "Je sais que (colonne de gauche, ex. 700)",
+      "b": "…correspond à (colonne de droite, ex. 1)",
+      "c": "Nouvelle valeur, même colonne que la première (ex. 350)",
+      "x": "Elle correspond à",
+      "left": "Colonne de gauche",
+      "right": "Colonne de droite",
+      "known": "Je sais",
+      "sought": "Je cherche",
+      "formulas": [
+        "? = (colonne de droite connue × nouvelle valeur) ÷ valeur connue de gauche"
+      ]
+    }
+  }
+}

@@ -1,0 +1,119 @@
+name: Android CI
+
+on:
+  push:
+    branches: [master]
+    tags: ['v*']
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+# Une seule exécution à la fois par branche : une plus récente annule la précédente
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Types, lint et tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Types
+        run: npx tsc --noEmit
+      - name: Lint
+        run: npm run lint
+      - name: Tests
+        run: npm test -- --ci
+
+  apk:
+    name: APK release
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write # ajouter l'APK à une release (tags uniquement)
+    env:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm ci
+
+      - name: Licences du SDK Android
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+
+      - name: Clé de signature (si fournie)
+        id: signing
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+            {
+              echo "ORG_GRADLE_PROJECT_APPAINTUEUSE_STORE_FILE=$RUNNER_TEMP/release.keystore"
+              echo "ORG_GRADLE_PROJECT_APPAINTUEUSE_STORE_PASSWORD=$KEYSTORE_PASSWORD"
+              echo "ORG_GRADLE_PROJECT_APPAINTUEUSE_KEY_ALIAS=$KEY_ALIAS"
+              echo "ORG_GRADLE_PROJECT_APPAINTUEUSE_KEY_PASSWORD=$KEY_PASSWORD"
+            } >> "$GITHUB_ENV"
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Pas de clé de publication : l'APK sera signé avec la clé de debug."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compiler l'APK release
+        working-directory: android
+        run: ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a,armeabi-v7a --console=plain
+
+      - name: Nommer l'APK
+        id: apk
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            name="appaintueuse-${{ github.ref_name }}.apk"
+          else
+            name="appaintueuse-ci-${{ github.run_number }}-${GITHUB_SHA::7}.apk"
+          fi
+          cp android/app/build/outputs/apk/release/app-release.apk "$name"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          {
+            echo "### $name"
+            echo "- Taille : $(du -h "$name" | cut -f1)"
+            echo "- SHA-256 : \`$(sha256sum "$name" | cut -d' ' -f1)\`"
+            echo "- Signature : $([ '${{ steps.signing.outputs.signed }}' = 'true' ] && echo 'clé de publication' || echo 'clé de debug (pas de secrets configurés)')"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.apk.outputs.name }}
+          path: ${{ steps.apk.outputs.name }}
+          retention-days: 30
+
+      # Seulement pour un tag ET une APK signée avec la vraie clé : sinon on écraserait
+      # l'APK publié par une version signée autrement, impossible à installer par-dessus.
+      - name: Ajouter l'APK à la release
+        if: github.ref_type == 'tag' && steps.signing.outputs.signed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${{ github.ref_name }}" > /dev/null 2>&1 \
+            || gh release create "${{ github.ref_name }}" --title "${{ github.ref_name }}" --generate-notes
+          gh release upload "${{ github.ref_name }}" "${{ steps.apk.outputs.name }}" --clobber

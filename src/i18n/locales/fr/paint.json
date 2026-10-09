@@ -1,0 +1,150 @@
+{
+  "paint": {
+    "menu": {
+      "guide": "Combien de peinture ?",
+      "guideHint": "Ce que je peins, la peinture, le résultat.",
+      "mix": "Mélange en parts",
+      "others": "Autres outils"
+    },
+    "tools": {
+      "mix": "Répartition d'un mélange",
+      "netArea": "Surface nette",
+      "thinner": "Dilution",
+      "thickness": "Épaisseur humide ↔ sèche"
+    },
+    "netArea": {
+      "total": "Surface totale",
+      "deduction": "Zone retirée",
+      "addDeduction": "+ Ajouter une zone",
+      "net": "Surface nette",
+      "formulas": [
+        "Surface nette = totale − somme des zones retirées"
+      ],
+      "negative": "Les zones retirées dépassent la surface totale"
+    },
+    "mix": {
+      "ratio": "Ratio (ex. 4:1:1)",
+      "total": "Quantité totale",
+      "component": "Composant",
+      "formulas": [
+        "Composant = ratio du composant ÷ somme des ratios × total"
+      ]
+    },
+    "thinner": {
+      "paint": "Volume de peinture",
+      "percent": "Diluant (%)",
+      "thinner": "Diluant à ajouter",
+      "totalVolume": "Volume total",
+      "formulas": [
+        "Diluant = peinture × % ÷ 100"
+      ]
+    },
+    "thickness": {
+      "wet": "Épaisseur humide",
+      "dry": "Épaisseur sèche",
+      "solids": "Extrait sec (%)",
+      "formulas": [
+        "Sèche = humide × extrait sec ÷ 100",
+        "Humide = sèche × 100 ÷ extrait sec"
+      ],
+      "wetToDry": "Humide → sèche",
+      "dryToWet": "Sèche → humide"
+    },
+    "units": {
+      "m2": "m²",
+      "dm2": "dm²",
+      "cm2": "cm²",
+      "m2PerL": "m²/L"
+    },
+    "guide": {
+      "steps": {
+        "surface": "1. Ce que je peins",
+        "shape": "Choisir la forme",
+        "dimensions": "Mesures de la forme",
+        "known": "J'ai déjà la surface",
+        "product": "2. La peinture",
+        "result": "3. Le résultat"
+      },
+      "surface": {
+        "empty": "Rien à peindre pour l'instant.",
+        "known": "Surface connue",
+        "line": "{{area}} dm² × {{count}} = {{sub}} dm²",
+        "total": "Surface totale à peindre",
+        "addShape": "+ Ajouter une forme (je connais les mesures)",
+        "addKnown": "J'ai déjà la surface",
+        "next": "Continuer : choisir la peinture",
+        "remove": "Supprimer cette pièce",
+        "less": "Une de moins",
+        "more": "Une de plus"
+      },
+      "draft": {
+        "title": "Pièce en cours",
+        "resume": "Reprendre",
+        "abandon": "Abandonner",
+        "measures": "Mesures saisies : {{list}} ({{unit}})",
+        "knownValue": "Surface saisie : {{value}} {{unit}}",
+        "count": "Exemplaires : {{count}}"
+      },
+      "shape": {
+        "intro": "Touche la forme de ce que tu dois peindre."
+      },
+      "dimensions": {
+        "add": "Ajouter cette pièce",
+        "flat": "Une figure plane : toute sa surface est à peindre.",
+        "noPart": "Coche au moins une face à peindre.",
+        "zero": "Les mesures doivent être plus grandes que 0 pour calculer.",
+        "toDm2": "Passage en dm² (la suite du parcours compte en dm²)"
+      },
+      "count": {
+        "label": "Nombre d'exemplaires",
+        "hint": "Tu peins les deux côtés d'une plaque ? Mets 2.",
+        "invalid": "Indique un nombre entier, au moins 1."
+      },
+      "known": {
+        "label": "Surface",
+        "converted": "= {{value}} dm²",
+        "waiting": "Tape la surface pour voir la conversion en dm².",
+        "add": "Ajouter cette pièce"
+      },
+      "product": {
+        "question": "Combien de surface couvre 1 litre de cette peinture ?",
+        "modeArea": "Ma fiche donne des m² par litre",
+        "modeMl": "Ma fiche donne des mL",
+        "areaPerLiter": "m² par litre",
+        "startHint": "Valeur de départ : 7 m² par litre. Remplace-la par celle de la fiche de ta peinture.",
+        "ml": "Quantité de peinture (mL)",
+        "mlArea": "Surface couverte",
+        "mlSentence": "… mL de peinture couvrent … de surface.",
+        "convert": "Voir la conversion",
+        "rate": "Rendement",
+        "see": "Voir le résultat",
+        "invalid": "Il manque un nombre plus grand que 0."
+      },
+      "rate": {
+        "m2": "{{area}} m² × 100 = {{dm2}} dm² (1 m² = 100 dm²).",
+        "ml": "1 litre = 1 000 mL : {{dm2}} dm² × 1 000 ÷ {{ml}} mL = {{rate}} dm² par litre."
+      },
+      "plan": {
+        "one": "Une seule pièce : {{total}} dm².",
+        "sum": "{{values}} = {{total}} dm²."
+      },
+      "result": {
+        "title": "Quantité de peinture à préparer",
+        "soit": "soit {{liters}} L",
+        "marginTitle": "Prévoir un peu plus ?",
+        "marginNone": "Non",
+        "withMargin": "Avec marge : {{ml}} mL",
+        "details": "Comment on l'a calculé",
+        "totalTitle": "Surface totale à peindre",
+        "crossTitle": "Produit en croix : dm² ↔ litres",
+        "surface": "Surface (dm²)",
+        "liters": "Litres",
+        "known": "Connu",
+        "sought": "Cherché",
+        "edit": "Modifier les pièces",
+        "again": "Recommencer",
+        "missing": "Il manque une pièce ou un rendement : reprends depuis le début."
+      }
+    }
+  }
+}

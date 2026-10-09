@@ -1,0 +1,51 @@
+{
+  "learning": {
+    "cross": {
+      "pair": "{{a}} correspond à {{b}}.",
+      "zero": "Impossible de diviser par 0 : pas de résultat.",
+      "unit": "Pour 1 : {{b}} ÷ {{a}} = {{unit}}.",
+      "split": "Pour faciliter, {{c}} = {{chunks}}.",
+      "part": "{{unit}} × {{part}} = {{value}}.",
+      "sum": "On additionne : {{values}} = {{result}}.",
+      "direct": "{{unit}} × {{c}} = {{result}}.",
+      "result": "Réponse : {{result}}."
+    },
+    "parts": {
+      "invalid": "Les parts doivent être positives.",
+      "sum": "Total des parts : {{expr}} = {{sum}}.",
+      "perPart": "Une part vaut : {{total}} ÷ {{sum}} = {{perPart}}.",
+      "amount": "Composant {{n}} : {{perPart}} × {{part}} = {{amount}}.",
+      "check": "Vérification : {{expr}} = {{sum}}.",
+      "legend": "{{count}} part(s)"
+    },
+    "quantity": {
+      "zero": "Quantité nulle : rien à prévoir.",
+      "tiny": "moins d'un huitième de litre",
+      "about": {
+        "eighth": "environ un huitième de litre",
+        "quarter": "environ un quart de litre",
+        "half": "environ un demi-litre",
+        "threeQuarters": "environ trois quarts de litre",
+        "one": "environ un litre"
+      },
+      "between": {
+        "eighth": "entre un huitième et un quart de litre",
+        "quarter": "entre un quart et un demi-litre",
+        "half": "entre un demi-litre et trois quarts de litre",
+        "threeQuarters": "entre trois quarts de litre et un litre"
+      },
+      "pot": "environ un pot d'1 litre",
+      "pots": "environ {{n}} pots d'1 litre",
+      "potsBetween": "entre {{low}} et {{high}} pots d'1 litre"
+    },
+    "practice": {
+      "toggle": "Mode « À toi d'essayer »",
+      "question": "Ton résultat ?",
+      "check": "Vérifier",
+      "reveal": "Voir la réponse",
+      "ok": "Bravo !",
+      "more": "C'est plus que ça. Essaie encore !",
+      "less": "C'est moins que ça. Essaie encore !"
+    }
+  }
+}

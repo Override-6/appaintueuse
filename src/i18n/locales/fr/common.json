@@ -1,0 +1,17 @@
+{
+  "app": {
+    "name": "Appaintueuse",
+    "back": "Retour",
+    "result": "Résultat",
+    "formulas": "Formules",
+    "reset": "Effacer",
+    "openInCalculator": "Ouvrir dans la calculatrice"
+  },
+  "tabs": {
+    "calculator": "Calcul",
+    "maths": "Maths",
+    "geometry": "Géométrie",
+    "conversions": "Conversions",
+    "paint": "Peinture"
+  }
+}
